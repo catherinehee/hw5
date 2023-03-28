@@ -44,7 +44,7 @@ std::set<std::string> wordle(
         }
         if (allFixed)
         {
-            if (dict.find(n) != dict.end()){
+            if (dict.find(in) != dict.end()){
                 words.insert(in);
             }
             return words;
@@ -65,13 +65,6 @@ std::set<std::string> wordle(
         }
         return words;
     }
-    // try each floating letter at each spot
-    // if floating.size() == 0, randomly generate at each spot
-
-    // LENGTH of word:in.size()
-    
-
-    // Add your code here
 
 }
 
