@@ -35,8 +35,7 @@ bool isValid(
     }
 
     if (!avail[day][worker] || shifts[worker] > maxShifts) return false;
-    else
-        return true;
+    else return true;
 }
 
 bool scheduleHelper(
@@ -56,6 +55,8 @@ bool scheduleHelper(
     {
         for (int i = 0; i < workers; i++) // NUMBER OF DAYS
         {
+					vector<Worker_T> daySched = sched[day];
+					if (find(daySched.begin(), daySched.end(), i) == daySched.end()){
             sched[day][workerCol] = i;
             shifts[i]++;
             int tempWorkerCol = workerCol;
@@ -76,6 +77,7 @@ bool scheduleHelper(
             }
             sched[day][workerCol] = INVALID_ID;
             shifts[i]--;
+					}
         }
         return false;
     }
@@ -97,21 +99,25 @@ bool schedule(
     sched.clear();
     
     // Add your code below
-    vector<int> shifts;
+    vector<int> shifts(avail[0].size());
+    std::fill(shifts.begin(), shifts.end(), 0);
     for (int i = 0; i < avail.size(); i++)
     {
-        vector<Worker_T> daySched;
-        for (int j = 0; j < dailyNeed; j++)
-        {
-            daySched.push_back(INVALID_ID);
-        }
+        // vector<Worker_T> daySched;
+        // for (int j = 0; j < dailyNeed; j++)
+        // {
+        //     daySched.push_back(INVALID_ID);
+        // }
+        vector<Worker_T> daySched(dailyNeed);
+        std::fill(daySched.begin(), daySched.end(), INVALID_ID);
         sched.push_back(daySched);
         
     }
-    for (int i = 0; i < avail[0].size(); i++)
-    {
-        shifts.push_back(0);
-    }
+    
+    // for (int i = 0; i < avail[0].size(); i++)
+    // {
+    //     shifts.push_back(0);
+    // }
 
     return scheduleHelper(avail, dailyNeed, maxShifts, sched, 0, 0, shifts);
     
